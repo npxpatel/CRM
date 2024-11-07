@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leads Home</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Verdana', sans-serif;
+            background-color: #282c34;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        h1 {
+            color: #61dafb;
+            font-size: 2.5rem;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* List Styles */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            width: 90%;
+            max-width: 700px;
+        }
+
+        li {
+            background-color: #333842;
+            border-left: 5px solid #61dafb;
+            color: #a9b3c1;
+            padding: 15px 20px;
+            margin: 12px 0;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        li:hover {
+            background-color: #3e4553;
+            border-left-color: #ff6b6b;
+            color: #ffffff;
+        }
+
+        /* Number Badge */
+        .lead-number {
+            background-color: #ff6b6b;
+            color: #ffffff;
+            font-weight: bold;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Our Leads</h1>
+    <ul>
+        {% for lead in leads %}
+            <li>
+                <span class="lead-number">{{ forloop.counter }}</span>
+                {{ lead.first_name }}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

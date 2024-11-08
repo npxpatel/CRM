@@ -1,0 +1,12 @@
+{% extends 'basw.html' %}
+
+{% block content %}
+    <h1>Delete Lead</h1>
+    <p>Are you sure you want to delete this lead?</p>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Confirm</button>
+        <a href="{% url 'leads:lead_list' %}">Cancel</a>
+    </form>
+{% endblock  %}

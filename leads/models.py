@@ -4,7 +4,8 @@ from django.db.models.signals import post_save
 #an organistion having multiple agents who can have mulitple leads:
 
 class User(AbstractUser):
-    pass 
+    is_organiser = models.BooleanField(default=True)
+    is_agent = models.BooleanField(default=False)
 
 class UserProfile(models.Model):
     # it doesn't get created automatically after the User is created, use signals bro
@@ -13,10 +14,9 @@ class UserProfile(models.Model):
     def __str__(self):
         return f"{self.user.username}"
 
-
 class Agent(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    origanisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     
     def __str__(self):
         return f"{self.user.email}"

@@ -1,7 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
-#an organistion having multiple agents who can have mulitple leads:
+
+# an organistion having multiple agents who can have mulitple leads:
+# organisor will assign leads to agents
+
+# when you sing up, you are an organiser by default for that organisation
 
 class User(AbstractUser):
     is_organiser = models.BooleanField(default=True)
@@ -35,8 +39,11 @@ class Lead(models.Model):
     age = models.IntegerField(default=0)
     phoned = models.BooleanField(default=False)
     source = models.CharField(choices=SOURCES_CHOICES, max_length=100)
+    organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    agent = models.ForeignKey(Agent, on_delete=models.SET_NULL, blank=True, null=True) # leads will stay even if agents get deleted!
     
-    agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
+
+
 
     def __str__(self):
         return f"{self.first_name} by {self.source}"
@@ -44,6 +51,6 @@ class Lead(models.Model):
 
 def post_user_created_signal(sender, instance, created, **kwargs):
      if created:
-         UserProfile.objects.create(user=instance)
+         UserProfile.objects.create(user=instance) 
 
 post_save.connect(post_user_created_signal, sender=User)      #model that sends the event to create a userprofile after a newUser joins
